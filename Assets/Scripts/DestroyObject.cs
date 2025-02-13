@@ -5,12 +5,12 @@ using UnityEngine;
 public class DestroyObject : MonoBehaviour
 {
 
-    public float ballSpeed;
+    private float ballSpeed =5f;
     public int BallCount;
     public TMP_Text ballCountText;
     public Transform moveOutTransform;
 
-    public float rayDistance = 100f;
+    private float rayDistance = 100f;
     public LayerMask cubeLayer;
     public Transform shootPoint;
 
@@ -19,10 +19,10 @@ public class DestroyObject : MonoBehaviour
     
     private GameObject lastHitObject = null;
     private float lastShotTime = 0f;
-    public float shootCoolDown;
+    private float shootCoolDown=0.25f;
 
     public float moveSpeed = 10f;
-    public int currentPlatformIndex = -1;
+    private int currentPlatformIndex = -1;
 
     private bool isReadyToShoot = false;
 
@@ -92,7 +92,7 @@ public class DestroyObject : MonoBehaviour
         ballCountText.text = BallCount.ToString();
         if(BallCount <= 0)
         {
-            MoveOut();
+            Invoke("MoveOut", 0.5f);
         }
     }
     public void MoveOut()

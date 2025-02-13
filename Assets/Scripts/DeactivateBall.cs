@@ -6,6 +6,7 @@ public class DeactivateBall : MonoBehaviour
 {
     private string targetTag;
     public ParticleSystem RedBox, GreenBox, BlueBox, YellowBox, BrownBox;
+    public ParticleSystem hit;
 
     public void SetTargetTag(string tags)
     {
@@ -17,15 +18,17 @@ public class DeactivateBall : MonoBehaviour
         {
             //other.gameObject.SetActive(false);
             Destroy(other.gameObject);
-            Handheld.Vibrate();
+            //Handheld.Vibrate();
             ParticleSystem particleSystem = GetParticleSystemByTag(targetTag);
             if (particleSystem != null)
             {
                 ParticleSystem instantiatedParticles = Instantiate(particleSystem, transform.position, Quaternion.identity);
+                ParticleSystem hitParticles = Instantiate(hit, transform.position, Quaternion.identity);
                 instantiatedParticles.Play();
+                hitParticles.Play();
 
-                // Optionally, destroy the particle system after it finishes playing
                 Destroy(instantiatedParticles.gameObject, instantiatedParticles.main.duration);
+                Destroy(hitParticles.gameObject, hit.main.duration);
             }
 
             gameObject.SetActive(false);

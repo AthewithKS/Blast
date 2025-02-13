@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class BoxController : MonoBehaviour
 {
-    public float rayDistance=.7f;
+    private float rayDistance=.8f;
     public LayerMask cubeLayer;
-    public float lerpSpeed = 13f;
+    private float lerpSpeed = 25f;
 
     public Vector3 targetPosition;
 
@@ -21,19 +21,16 @@ public class BoxController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, rayDistance, cubeLayer))
         {
-            SetTargetPosition(hit.transform.position);
+            targetPosition = transform.position;
         }
         else
         {
-            if (targetPosition != transform.position)
-            {
-                transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * lerpSpeed);
-            }
+            targetPosition = transform.position + Vector3.back;
         }
-    }
 
-    public void SetTargetPosition(Vector3 newTargetPosition)
-    {
-        targetPosition = newTargetPosition;
+        if (targetPosition != transform.position)
+        {
+            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * lerpSpeed);
+        }
     }
 }
